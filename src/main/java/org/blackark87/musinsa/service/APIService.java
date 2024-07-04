@@ -28,11 +28,11 @@ public class APIService {
 			List<ItemEntity> itemList = itemRepository.findAllByCategoryOrderByPrice(itemCategory);
 			itemList.forEach(itemEntity -> {
 				if(itemEntityMap.containsKey(itemCategory)){
-					itemEntityMap.computeIfPresent(itemCategory, (k, v) -> {
-						if(v.getPrice() > itemEntity.getPrice()){
+					itemEntityMap.computeIfPresent(itemCategory, (category, item) -> {
+						if(item.getPrice() > itemEntity.getPrice()){
 							return itemEntity;
 						}
-						return v;
+						return item;
 					});
 				} else{
 					itemEntityMap.put(itemCategory, itemEntity);
@@ -41,8 +41,8 @@ public class APIService {
 		});
 
 		List<ResponseObject.Item> itemList = new ArrayList<>();
-		itemEntityMap.forEach((k, v) -> {
-			ResponseObject.Item item = new ResponseObject.Item(v.getBrand(), v.getCategory(), v.getPrice());
+		itemEntityMap.forEach((category, itemEntity) -> {
+			ResponseObject.Item item = new ResponseObject.Item(itemEntity.getBrand(), itemEntity.getCategory(), itemEntity.getPrice());
 			itemList.add(item);
 		});
 
