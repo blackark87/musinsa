@@ -4,12 +4,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.blackark87.musinsa.entity.ItemEntity;
 import org.blackark87.musinsa.enums.ItemCategoryEnum;
+import org.blackark87.musinsa.enums.ResponseExceptionCodeEnums;
+import org.blackark87.musinsa.exceptions.CustomException;
 import org.blackark87.musinsa.model.ResponseObject;
 import org.blackark87.musinsa.repository.ItemRepository;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
 @Service
@@ -45,5 +47,25 @@ public class APIService {
 		});
 
 		return new ResponseObject.LowestPriceItem(itemList);
+	}
+
+	public ResponseObject.LowestPriceItem getLowestPriceBrand() {
+		return null;
+	}
+
+	public ResponseObject.HighLowItem getHighLowItem(String category) {
+		AtomicReference<ResponseObject.Item> highItem = new AtomicReference<>();
+		AtomicReference<ResponseObject.Item> lowItem = new AtomicReference<>();
+
+		List<ItemEntity> itemList = itemRepository.findAllByCategoryOrderByPrice(category);
+
+		if(itemList.isEmpty()){
+			throw new CustomException(ResponseExceptionCodeEnums.NOT_FOUND);
+		}
+
+		itemList.stream().max(Comparator.comparing(ItemEntity::getPrice)).ifPresent(itemEntity -> highItem.set(new ResponseObject.Item(itemEntity.getBrand(), itemEntity.getCategory(), itemEntity.getPrice())));
+		itemList.stream().min(Comparator.comparing(ItemEntity::getPrice)).ifPresent(itemEntity -> lowItem.set(new ResponseObject.Item(itemEntity.getBrand(), itemEntity.getCategory(), itemEntity.getPrice())));
+
+		return new ResponseObject.HighLowItem(category, highItem.get(), lowItem.get());
 	}
 }

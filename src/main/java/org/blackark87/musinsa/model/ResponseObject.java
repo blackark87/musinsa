@@ -5,9 +5,9 @@ import java.util.List;
 public class ResponseObject {
 
 	public record LowestPriceItem(
-		List<Item> items,
-		double totalPrice
-	){
+			List<Item> items,
+			double totalPrice
+	) {
 		public LowestPriceItem(List<Item> items) {
 			this(items, items.stream().mapToDouble(Item::price).sum());
 		}
@@ -22,7 +22,15 @@ public class ResponseObject {
 			String brand,
 			String category,
 			double price
-	){
+	) {
+
+	}
+
+	public record HighLowItem(
+			String category,
+			Item high,
+			Item low
+	) {
 
 	}
 

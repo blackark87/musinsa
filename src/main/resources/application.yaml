@@ -20,9 +20,8 @@ spring:
     username: sa
     password: sa
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     open-in-view: true
     properties:
       hibernate:
