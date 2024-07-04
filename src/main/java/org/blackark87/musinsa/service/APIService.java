@@ -6,6 +6,7 @@ import org.blackark87.musinsa.entity.ItemEntity;
 import org.blackark87.musinsa.enums.ItemCategoryEnum;
 import org.blackark87.musinsa.enums.ResponseExceptionCodeEnums;
 import org.blackark87.musinsa.exceptions.CustomException;
+import org.blackark87.musinsa.model.RequestObject;
 import org.blackark87.musinsa.model.ResponseObject;
 import org.blackark87.musinsa.repository.ItemRepository;
 import org.springframework.stereotype.Service;
@@ -67,5 +68,43 @@ public class APIService {
 		itemList.stream().min(Comparator.comparing(ItemEntity::getPrice)).ifPresent(itemEntity -> lowItem.set(new ResponseObject.Item(itemEntity.getBrand(), itemEntity.getCategory(), itemEntity.getPrice())));
 
 		return new ResponseObject.HighLowItem(category, highItem.get(), lowItem.get());
+	}
+
+	public String saveItem(RequestObject.Item item) {
+		ItemEntity itemEntity = new ItemEntity();
+
+		Optional.of(item.brand()).ifPresentOrElse(itemEntity::setBrand, () -> {
+			throw new CustomException(ResponseExceptionCodeEnums.NO_PRICE);
+		});
+
+		Optional.of(item.category()).ifPresentOrElse(itemEntity::setCategory, () -> {
+			throw new CustomException(ResponseExceptionCodeEnums.NO_CATEGORY);
+		});
+
+		Optional.of(item.price()).ifPresentOrElse(itemEntity::setPrice, () -> {
+			throw new CustomException(ResponseExceptionCodeEnums.NO_PRICE);
+		});
+
+		itemEntity.setStock(1);
+		itemRepository.save(itemEntity);
+		return "OK";
+	}
+
+	public String deleteItem(RequestObject.Item item) {
+		ItemEntity itemEntity = itemRepository.findByBrandAndCategory(item.brand(), item.category()).orElseThrow(() -> new CustomException(ResponseExceptionCodeEnums.NOT_EXIST));
+		itemRepository.delete(itemEntity);
+		return "OK";
+	}
+
+	public String updateItem(String brand, String category, RequestObject.Item item) {
+		ItemEntity itemEntity = itemRepository.findByBrandAndCategory(brand, category).orElseThrow(() -> new CustomException(ResponseExceptionCodeEnums.NOT_EXIST));
+
+		Optional.of(item.brand()).ifPresent(itemEntity::setBrand);
+		Optional.of(item.category()).ifPresent(itemEntity::setCategory);
+		Optional.of(item.price()).ifPresent(itemEntity::setPrice);
+
+		itemRepository.save(itemEntity);
+
+		return "OK";
 	}
 }

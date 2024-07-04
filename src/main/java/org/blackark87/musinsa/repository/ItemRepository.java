@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface ItemRepository extends JpaRepository<ItemEntity, Long>{
 
-	Optional<ItemEntity> findByCategoryOrderByPrice(String category);
-
 	List<ItemEntity> findAllByCategoryOrderByPrice(String category);
+
+	Optional<ItemEntity> findByBrandAndCategory(String brand, String category);
 }

@@ -3,6 +3,7 @@ package org.blackark87.musinsa.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.blackark87.musinsa.model.RequestObject;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
