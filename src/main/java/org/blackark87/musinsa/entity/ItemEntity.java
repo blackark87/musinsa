@@ -7,20 +7,26 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "item")
+@Table(name = "item", indexes = {
+		@Index(name = "idx_item_category", columnList = "category"),
+		@Index(name = "idx_item_price", columnList = "price"),
+		@Index(name = "idx_item_brand", columnList = "brand"),
+})
 public class ItemEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.UUID)
+	private UUID id;
 
 	private String brand;
 	private String category;
-	private long price;
+	private double price;
+	private long stock;
 
 	@CreationTimestamp
 	private LocalDateTime createdAt;

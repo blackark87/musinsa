@@ -1,23 +1,27 @@
 package org.blackark87.musinsa.model;
 
+import java.util.List;
+
 public class ResponseObject {
 
 	public record LowestPriceItem(
-		Item top,
-		Item outer,
-		Item pants,
-		Item shoes,
-		Item bag,
-		Item hat,
-		Item socks,
-		Item accessory
+		List<Item> items,
+		double totalPrice
 	){
+		public LowestPriceItem(List<Item> items) {
+			this(items, items.stream().mapToDouble(Item::price).sum());
+		}
 
+		@Override
+		public double totalPrice() {
+			return totalPrice;
+		}
 	}
 
 	public record Item(
 			String brand,
-			long price
+			String category,
+			double price
 	){
 
 	}

@@ -17,6 +17,6 @@ public class APIController {
 
 	@GetMapping("/lowest-price-item")
 	public Mono<ResponseObject.LowestPriceItem> getLowestPriceItem() {
-		return apiService.getLowestPrice();
+		return Mono.just(apiService.getLowestPrice());
 	}
 }
