@@ -7,13 +7,12 @@ $(document).ready(
                 url: "/api/lowest-price-items",
                 method: "GET",
                 dataType: "JSON",
-                error: function(xhr, status, error){
-                    console.error(status, error);
-                    $("content").html("<p>error</p>")
-                }
             }).done(function(response){
                 let content = "<pre>" + JSON.stringify(response, null, 2) + "</pre>"
                 $("#content").html(content)
+            }).fail(function(xhr, status, error){
+                console.error(status, error);
+                $("#content").html("<pre>" + JSON.stringify(xhr.responseJSON, null, 2) + "</pre>")
             })
         })
 
@@ -24,13 +23,12 @@ $(document).ready(
                 url: "/api/lowest-price-brand-items",
                 method: "GET",
                 dataType: "JSON",
-                error: function(xhr, status, error){
-                    console.error(status, error);
-                    $("content").html("<p>error</p>")
-                }
             }).done(function(response){
                 let content = "<pre>" + JSON.stringify(response, null, 2) + "</pre>"
                 $("#content").html(content)
+            }).fail(function(xhr, status, error){
+                console.error(status, error);
+                $("#content").html("<pre>" + JSON.stringify(xhr.responseJSON, null, 2) + "</pre>")
             })
         })
 
@@ -51,7 +49,7 @@ $(document).ready(
                 $("#content").html(content)
             }).fail(function(xhr, status, error){
                 console.error(status, error);
-                $("content").html("<p>error</p>")
+                $("#content").html("<pre>" + JSON.stringify(xhr.responseJSON, null, 2) + "</pre>")
             })
         })
 
@@ -60,23 +58,24 @@ $(document).ready(
             $("#q4").addClass("active")
             let brand = prompt("브랜드를 입력해 주세요")
             let category = prompt("카테고리를 입력해 주세요")
+            let price = prompt("가격을 입력해 주세요")
             let item = {
                 brand: brand,
-                category: category
+                category: category,
+                price: price
             }
             $.ajax({
                 url: "/api/item",
                 method: "POST",
                 dataType: "JSON",
                 contentType: "application/json",
-                data: item,
-                error: function(xhr, status, error){
-                    console.error(status, error);
-                    $("content").html("<p>error</p>")
-                }
+                data: JSON.stringify(item),
             }).done(function(response){
                 let content = "<pre>" + JSON.stringify(response, null, 2) + "</pre>"
                 $("#content").html(content)
+            }).fail(function(xhr, status, error){
+                console.error(status, error);
+                $("#content").html("<pre>" + JSON.stringify(xhr.responseJSON, null, 2) + "</pre>")
             })
 
         })
@@ -96,14 +95,13 @@ $(document).ready(
                 method: "DELETE",
                 dataType: "JSON",
                 contentType: "application/json",
-                data: item,
-                error: function(xhr, status, error){
-                    console.error(status, error);
-                    $("content").html("<p>error</p>")
-                }
+                data: JSON.stringify(item),
             }).done(function(response){
                 let content = "<pre>" + JSON.stringify(response, null, 2) + "</pre>"
                 $("#content").html(content)
+            }).fail(function(xhr, status, error){
+                console.error(status, error);
+                $("#content").html("<pre>" + JSON.stringify(xhr.responseJSON, null, 2) + "</pre>")
             })
 
         })
@@ -128,7 +126,7 @@ $(document).ready(
                 method: "POST",
                 dataType: "JSON",
                 contentType: "application/json",
-                data: item,
+                data: JSON.stringify(item),
                 error: function(xhr, status, error){
                     console.error(status, error);
                     $("content").html("<p>error</p>")
@@ -136,6 +134,9 @@ $(document).ready(
             }).done(function(response){
                 let content = "<pre>" + JSON.stringify(response, null, 2) + "</pre>"
                 $("#content").html(content)
+            }).fail(function(xhr, status, error){
+                console.error(status, error);
+                $("#content").html("<pre>" + JSON.stringify(xhr.responseJSON, null, 2) + "</pre>")
             })
 
         })

@@ -11,6 +11,7 @@ public enum ResponseExceptionCodeEnums implements ResponseCode {
 	NO_BRAND(400, 400001, "브랜드 정보가 없습니다."),
 	NO_CATEGORY(400, 400002, "카테고리 정보가 없습니다."),
 	NO_PRICE(400, 400003, "가격 정보가 없습니다."),
+	NOT_EXIST_BRAND_AND_CATEGORY(400, 400004, "브랜드와 카테고리 정보가 없습니다."),
 	;
 
 	private final int httpStatus;

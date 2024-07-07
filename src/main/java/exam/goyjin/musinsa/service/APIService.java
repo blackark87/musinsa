@@ -115,13 +115,13 @@ public class APIService {
 	}
 
 	public ResponseObject.plainResult deleteItem(RequestObject.Item item) {
-		ItemEntity itemEntity = itemRepository.findByBrandAndCategory(item.brand(), item.category()).orElseThrow(() -> new CustomException(ResponseExceptionCodeEnums.NOT_EXIST));
+		ItemEntity itemEntity = itemRepository.findByBrandAndCategory(item.brand(), item.category()).orElseThrow(() -> new CustomException(ResponseExceptionCodeEnums.NOT_EXIST_BRAND_AND_CATEGORY));
 		itemRepository.delete(itemEntity);
 		return new ResponseObject.plainResult("OK");
 	}
 
 	public ResponseObject.plainResult updateItem(String brand, String category, RequestObject.Item item) {
-		ItemEntity itemEntity = itemRepository.findByBrandAndCategory(brand, category).orElseThrow(() -> new CustomException(ResponseExceptionCodeEnums.NOT_EXIST));
+		ItemEntity itemEntity = itemRepository.findByBrandAndCategory(brand, category).orElseThrow(() -> new CustomException(ResponseExceptionCodeEnums.NOT_EXIST_BRAND_AND_CATEGORY));
 
 		Optional.of(item.brand()).ifPresent(itemEntity::setBrand);
 		Optional.of(item.category()).ifPresent(itemEntity::setCategory);
