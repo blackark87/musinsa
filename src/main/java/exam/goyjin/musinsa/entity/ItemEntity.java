@@ -26,7 +26,6 @@ public class ItemEntity {
 	private String brand;
 	private String category;
 	private double price;
-	private long stock;
 
 	@CreationTimestamp
 	private LocalDateTime createdAt;

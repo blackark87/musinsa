@@ -109,7 +109,6 @@ public class APIService {
 			throw new CustomException(ResponseExceptionCodeEnums.NO_PRICE);
 		});
 
-		itemEntity.setStock(1);
 		itemRepository.save(itemEntity);
 
 		return new ResponseObject.plainResult("OK");

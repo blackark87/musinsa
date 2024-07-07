@@ -29,7 +29,7 @@ public class APIController {
 		return Mono.just(apiService.getLowestPriceBrand());
 	}
 
-	@GetMapping("/get-high-low-item/{category}")
+	@GetMapping("/high-low-item/{category}")
 	@Operation(summary = "Get High Low Item", description = "Get High Low Item")
 	public Mono<ResponseObject.HighLowItem> getHighLowItem(@PathVariable("category") String category) {
 		return Mono.just(apiService.getHighLowItem(category));
