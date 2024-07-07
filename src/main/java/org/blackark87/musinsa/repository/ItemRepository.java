@@ -11,4 +11,5 @@ public interface ItemRepository extends JpaRepository<ItemEntity, Long>{
 	List<ItemEntity> findAllByCategoryOrderByPrice(String category);
 
 	Optional<ItemEntity> findByBrandAndCategory(String brand, String category);
+
 }

@@ -4,8 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.blackark87.musinsa.model.RequestObject;
 import org.blackark87.musinsa.model.ResponseObject;
 import org.blackark87.musinsa.service.APIService;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
@@ -22,7 +20,7 @@ public class APIController {
 	}
 
 	@GetMapping("/lowest-price-brand-items")
-	public Mono<ResponseObject.LowestPriceItem> getLowestPriceBrandItem() {
+	public Mono<ResponseObject.LowestPriceBrandItem> getLowestPriceBrandItem() {
 		return Mono.just(apiService.getLowestPriceBrand());
 	}
 
@@ -32,22 +30,19 @@ public class APIController {
 	}
 
 	@PostMapping("/item")
-	public Mono<ResponseEntity<String>> saveItem(@RequestBody RequestObject.Item item) {
-		String result = apiService.saveItem(item);
-		return Mono.just(ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(result));
+	public Mono<ResponseObject.plainResult> saveItem(@RequestBody RequestObject.Item item) {
+		return Mono.just(apiService.saveItem(item));
 	}
 
 	@DeleteMapping("/item")
-	public Mono<ResponseEntity<String>> deleteItem(@RequestBody RequestObject.Item item) {
-		String result = apiService.deleteItem(item);
-		return Mono.just(ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(result));
+	public Mono<ResponseObject.plainResult> deleteItem(@RequestBody RequestObject.Item item) {
+		return Mono.just(apiService.deleteItem(item));
 	}
 
 	@PatchMapping("/item/{brand}/{category}")
-	public Mono<ResponseEntity<String>> updateItem(@PathVariable("brand") String brand,
+	public Mono<ResponseObject.plainResult> updateItem(@PathVariable("brand") String brand,
 	                                               @PathVariable("category") String category,
 	                                               @RequestBody RequestObject.Item item) {
-		String result = apiService.updateItem(brand, category, item);
-		return Mono.just(ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(result));
+		return Mono.just(apiService.updateItem(brand, category, item));
 	}
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -50,8 +51,31 @@ public class APIService {
 		return new ResponseObject.LowestPriceItem(itemList);
 	}
 
-	public ResponseObject.LowestPriceItem getLowestPriceBrand() {
-		return null;
+	public ResponseObject.LowestPriceBrandItem getLowestPriceBrand() {
+		List<ItemEntity> itemEntityList = itemRepository.findAll();
+
+		List<String> brandList = itemEntityList.stream().collect(Collectors.groupingBy(ItemEntity::getBrand)).keySet().stream().toList();
+
+		Map<String, Double> priceByBrandMap = new HashMap<>();
+
+		brandList.forEach(brand -> {
+			Double totalPrice = itemEntityList.stream().filter(itemEntity -> itemEntity.getBrand().equals(brand)).mapToDouble(ItemEntity::getPrice).sum();
+			priceByBrandMap.put(brand, totalPrice);
+		});
+
+		AtomicReference<String> brand = new AtomicReference<>();
+		priceByBrandMap.entrySet().stream().min(Map.Entry.comparingByValue()).ifPresent(entry -> brand.set(entry.getKey()));
+
+		List<ResponseObject.Item> itemList = new ArrayList<>();
+
+		itemEntityList.forEach(itemEntity -> {
+			if(itemEntity.getBrand().equals(brand.get())){
+				ResponseObject.Item item = new ResponseObject.Item(itemEntity.getBrand(), itemEntity.getCategory(), itemEntity.getPrice());
+				itemList.add(item);
+			}
+		});
+
+		return new ResponseObject.LowestPriceBrandItem(brand.get(), itemList);
 	}
 
 	public ResponseObject.HighLowItem getHighLowItem(String category) {
@@ -70,7 +94,7 @@ public class APIService {
 		return new ResponseObject.HighLowItem(category, highItem.get(), lowItem.get());
 	}
 
-	public String saveItem(RequestObject.Item item) {
+	public ResponseObject.plainResult saveItem(RequestObject.Item item) {
 		ItemEntity itemEntity = new ItemEntity();
 
 		Optional.of(item.brand()).ifPresentOrElse(itemEntity::setBrand, () -> {
@@ -87,16 +111,17 @@ public class APIService {
 
 		itemEntity.setStock(1);
 		itemRepository.save(itemEntity);
-		return "OK";
+
+		return new ResponseObject.plainResult("OK");
 	}
 
-	public String deleteItem(RequestObject.Item item) {
+	public ResponseObject.plainResult deleteItem(RequestObject.Item item) {
 		ItemEntity itemEntity = itemRepository.findByBrandAndCategory(item.brand(), item.category()).orElseThrow(() -> new CustomException(ResponseExceptionCodeEnums.NOT_EXIST));
 		itemRepository.delete(itemEntity);
-		return "OK";
+		return new ResponseObject.plainResult("OK");
 	}
 
-	public String updateItem(String brand, String category, RequestObject.Item item) {
+	public ResponseObject.plainResult updateItem(String brand, String category, RequestObject.Item item) {
 		ItemEntity itemEntity = itemRepository.findByBrandAndCategory(brand, category).orElseThrow(() -> new CustomException(ResponseExceptionCodeEnums.NOT_EXIST));
 
 		Optional.of(item.brand()).ifPresent(itemEntity::setBrand);
@@ -105,6 +130,6 @@ public class APIService {
 
 		itemRepository.save(itemEntity);
 
-		return "OK";
+		return new ResponseObject.plainResult("OK");
 	}
 }

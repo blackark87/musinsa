@@ -18,6 +18,21 @@ public class ResponseObject {
 		}
 	}
 
+	public record LowestPriceBrandItem(
+			double totalPrice,
+			String brand,
+			List<Item> items
+	){
+		public LowestPriceBrandItem(String brand, List<Item> items) {
+			this(items.stream().mapToDouble(Item::price).sum(), brand, items);
+		}
+
+		@Override
+		public double totalPrice() {
+			return totalPrice;
+		}
+	}
+
 	public record Item(
 			String brand,
 			String category,
@@ -31,6 +46,12 @@ public class ResponseObject {
 			Item high,
 			Item low
 	) {
+
+	}
+
+	public record plainResult(
+			String result
+	){
 
 	}
 

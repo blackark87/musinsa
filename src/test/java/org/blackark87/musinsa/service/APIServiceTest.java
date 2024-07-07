@@ -39,23 +39,34 @@ class APIServiceTest {
 	}
 
 	@Test
+	void getLowestPriceBrand(){
+		ResponseObject.LowestPriceBrandItem lowestPriceBrandItem = apiService.getLowestPriceBrand();
+		Assertions.assertNotNull(lowestPriceBrandItem);
+		Assertions.assertEquals("D", lowestPriceBrandItem.brand());
+		Assertions.assertEquals(36100D, lowestPriceBrandItem.totalPrice());
+
+	}
+
+	@Test
 	void addItem() {
 		RequestObject.Item item = new RequestObject.Item("Z", "top", 10000D);
-		String result = apiService.saveItem(item);
-		Assertions.assertEquals("OK", result);
+		ResponseObject.plainResult result = apiService.saveItem(item);
+		Assertions.assertEquals("OK", result.result());
 	}
 
 	@Test
 	void deleteItem(){
 		RequestObject.Item item = new RequestObject.Item("Z", "top", 10000D);
-		String result = apiService.deleteItem(item);
-		Assertions.assertEquals("OK", result);
+		apiService.saveItem(item);
+
+		ResponseObject.plainResult result = apiService.deleteItem(item);
+		Assertions.assertEquals("OK", result.result());
 	}
 
 	@Test
 	void updateItem(){
 		RequestObject.Item item = new RequestObject.Item("brand", "category", 10000D);
-		String result = apiService.updateItem("brand", "category", item);
-		Assertions.assertEquals("OK", result);
+		ResponseObject.plainResult result = apiService.updateItem("brand", "category", item);
+		Assertions.assertEquals("OK", result.result());
 	}
 }
