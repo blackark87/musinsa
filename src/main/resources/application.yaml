@@ -34,3 +34,24 @@ spring:
     prefix: classpath:/templates/
     suffix: .html
     mode: HTML
+
+springdoc:
+  swagger-ui:
+    path: /swagger
+    tags-sorter: alpha
+    operations-sorter: alpha
+    display-request-duration: true
+    disable-swagger-default-url: false
+    syntax-highlight:
+      activated: false
+    deep-linking: false
+    enabled: true
+  api-docs:
+    enabled: true
+  model-and-view-allowed: false
+  cache:
+    disabled: true
+  pre-loading-enabled: true
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  enable-spring-security: false

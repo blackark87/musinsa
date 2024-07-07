@@ -1,4 +1,4 @@
-package org.blackark87.musinsa.enums;
+package exam.goyjin.musinsa.enums;
 
 import lombok.Getter;
 

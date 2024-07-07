@@ -1,4 +1,4 @@
-package org.blackark87.musinsa;
+package exam.goyjin.musinsa;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

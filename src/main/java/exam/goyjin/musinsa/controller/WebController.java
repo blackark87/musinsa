@@ -1,4 +1,4 @@
-package org.blackark87.musinsa.controller;
+package exam.goyjin.musinsa.controller;
 
 
 import lombok.RequiredArgsConstructor;

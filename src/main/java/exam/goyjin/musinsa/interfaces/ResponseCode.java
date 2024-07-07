@@ -1,4 +1,4 @@
-package org.blackark87.musinsa.interfaces;
+package exam.goyjin.musinsa.interfaces;
 
 public interface ResponseCode {
 

@@ -1,4 +1,4 @@
-package org.blackark87.musinsa.model;
+package exam.goyjin.musinsa.model;
 
 import java.util.List;
 

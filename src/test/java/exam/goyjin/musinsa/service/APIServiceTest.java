@@ -1,7 +1,7 @@
-package org.blackark87.musinsa.service;
+package exam.goyjin.musinsa.service;
 
-import org.blackark87.musinsa.model.RequestObject;
-import org.blackark87.musinsa.model.ResponseObject;
+import exam.goyjin.musinsa.model.RequestObject;
+import exam.goyjin.musinsa.model.ResponseObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,14 +50,14 @@ class APIServiceTest {
 	@Test
 	void addItem() {
 		RequestObject.Item item = new RequestObject.Item("Z", "top", 10000D);
-		ResponseObject.plainResult result = apiService.saveItem(item);
+		ResponseObject.plainResult result = apiService.addItem(item);
 		Assertions.assertEquals("OK", result.result());
 	}
 
 	@Test
 	void deleteItem(){
 		RequestObject.Item item = new RequestObject.Item("Z", "top", 10000D);
-		apiService.saveItem(item);
+		apiService.addItem(item);
 
 		ResponseObject.plainResult result = apiService.deleteItem(item);
 		Assertions.assertEquals("OK", result.result());

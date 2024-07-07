@@ -1,14 +1,14 @@
-package org.blackark87.musinsa.service;
+package exam.goyjin.musinsa.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.blackark87.musinsa.entity.ItemEntity;
-import org.blackark87.musinsa.enums.ItemCategoryEnum;
-import org.blackark87.musinsa.enums.ResponseExceptionCodeEnums;
-import org.blackark87.musinsa.exceptions.CustomException;
-import org.blackark87.musinsa.model.RequestObject;
-import org.blackark87.musinsa.model.ResponseObject;
-import org.blackark87.musinsa.repository.ItemRepository;
+import exam.goyjin.musinsa.entity.ItemEntity;
+import exam.goyjin.musinsa.enums.ItemCategoryEnum;
+import exam.goyjin.musinsa.enums.ResponseExceptionCodeEnums;
+import exam.goyjin.musinsa.exceptions.CustomException;
+import exam.goyjin.musinsa.model.RequestObject;
+import exam.goyjin.musinsa.model.ResponseObject;
+import exam.goyjin.musinsa.repository.ItemRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -94,7 +94,7 @@ public class APIService {
 		return new ResponseObject.HighLowItem(category, highItem.get(), lowItem.get());
 	}
 
-	public ResponseObject.plainResult saveItem(RequestObject.Item item) {
+	public ResponseObject.plainResult addItem(RequestObject.Item item) {
 		ItemEntity itemEntity = new ItemEntity();
 
 		Optional.of(item.brand()).ifPresentOrElse(itemEntity::setBrand, () -> {

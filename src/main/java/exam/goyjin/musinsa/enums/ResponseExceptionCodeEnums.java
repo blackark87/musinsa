@@ -1,7 +1,7 @@
-package org.blackark87.musinsa.enums;
+package exam.goyjin.musinsa.enums;
 
+import exam.goyjin.musinsa.interfaces.ResponseCode;
 import lombok.Getter;
-import org.blackark87.musinsa.interfaces.ResponseCode;
 
 @Getter
 public enum ResponseExceptionCodeEnums implements ResponseCode {

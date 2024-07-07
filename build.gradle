@@ -5,7 +5,7 @@ plugins {
     id 'org.asciidoctor.jvm.convert' version '3.3.2'
 }
 
-group = 'org.blackark87'
+group = 'exam.gyojin'
 version = '0.0.1-SNAPSHOT'
 
 java {
@@ -28,6 +28,7 @@ ext {
     set('snippetsDir', file("build/generated-snippets"))
 }
 
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -46,9 +47,14 @@ dependencies {
 
     // TEST
     testImplementation 'org.mockito:mockito-core:5.12.0'
-
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
     // Thymeleaf decorator
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.3.0'
+
+    // SWAGGER
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.4.0'
+
+
 
 
 }

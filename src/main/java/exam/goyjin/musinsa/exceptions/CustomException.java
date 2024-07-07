@@ -1,7 +1,7 @@
-package org.blackark87.musinsa.exceptions;
+package exam.goyjin.musinsa.exceptions;
 
 import lombok.Getter;
-import org.blackark87.musinsa.enums.ResponseExceptionCodeEnums;
+import exam.goyjin.musinsa.enums.ResponseExceptionCodeEnums;
 
 @Getter
 public class CustomException extends RuntimeException{

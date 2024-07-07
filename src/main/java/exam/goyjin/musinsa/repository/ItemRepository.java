@@ -1,6 +1,6 @@
-package org.blackark87.musinsa.repository;
+package exam.goyjin.musinsa.repository;
 
-import org.blackark87.musinsa.entity.ItemEntity;
+import exam.goyjin.musinsa.entity.ItemEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

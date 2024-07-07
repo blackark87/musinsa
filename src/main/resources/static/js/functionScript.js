@@ -55,6 +55,7 @@ $(document).ready(
         $("#q4").off("click").on("click", function() {
             $(".quest-button").removeClass("active")
             $(this).addClass("active")
+
             $("#content").text("q4")
         })
     }

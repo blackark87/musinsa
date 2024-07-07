@@ -1,4 +1,4 @@
-package org.blackark87.musinsa;
+package exam.goyjin.musinsa;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
