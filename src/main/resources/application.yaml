@@ -21,9 +21,16 @@ spring:
     password: sa
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     open-in-view: true
     properties:
       hibernate:
         show_sql: true
         format_sql: true
+  thymeleaf:
+    enabled: true
+    cache: false
+    encoding: UTF-8
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
